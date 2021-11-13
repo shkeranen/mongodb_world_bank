@@ -1,0 +1,56 @@
+1) Convert this SQL code to MongoDB:
+
+SELECT * FROM world_bank WHERE regionname =  “Africa”
+
+Answer:
+
+db.world_bank.find({ "regionname " :   "Africa" });
+
+
+- The query returned all the countries names which are in the region Africa. 
+The output returned active projects,countryshortname, lendprojectcost  etc.
+
+
+2) Convert this SQL code to MongoDB:
+
+SELECT COUNT(*) FROM world_bank WHERE regionname = “South Asia”
+
+Answer:
+
+db.world_bank.find({  "regionname": “South Asia” }).count()
+
+ - The aggratege method count() in order to get the number of projects 
+based on the South Asia region. 
+65 projects were shown (only the number due to the count function).
+
+
+3) Convert this SQL code to MongoDB:
+
+SELECT project_name FROM world_bank WHERE lendprojectcost>1000000
+
+Answer:
+
+db.world_bank.find({  "lendprojectcost":{ "$gt" : 1000000 }},{   "project_name": 1});
+
+- The $gt method to show all the projects that have lendproject cost 
+bigger than 1000000 and by writing project_name: 
+1 we got the following output where the matching projects are shown.
+
+
+4) Which are the three countries in the MENA region(“Middle east & North Africa”) with the most projects?
+
+Answer: Yemen, Morocco & Jordan have most projects in the MENA region.
+
+db.world_bank.aggregate([{$match : {regionname : “Middle East and North Africa”}}, {$group : {_id : “$countryshortname” , count : {$sum : 1}}},{$sort : {count : -1}}]}
+
+
+5) Which region has the  largest total amount of lend project cost?
+
+Asnwer: South Asia has the largest total amount of lend project cost.
+
+db.world_bank.aggregate([{$group : {_id : “$regionname” , “TotalAmount” : {$sum : “$lendprojectcost”}}}, {$sort : {TotalAmount : -1}}]);
+
+
+6) Which active projects have a lend project cost of over 1 billion USD?
+
+db.world_bank.distinct("project_name" ,{ "$and" : [ { "lendprojectcost": { "$gt" : 10000000 }},{ "projectstatusdisplay" : "Active" } ]}).sort();

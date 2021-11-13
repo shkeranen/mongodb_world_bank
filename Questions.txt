@@ -1,0 +1,15 @@
+Part I: Query Mechanisms in MongoDB 
+
+Convert the following SQL queries to JavaScript (the main query language in MongoDB and
+used in the shell client) and describe what is returned by each query:
+
+1. SELECT * FROM world_bank WHERE regionname = “Africa”
+2. SELECT COUNT(*) FROM world_bank WHERE regionname = “South Asia”
+3. SELECT project_name FROM world_bank WHERE lendprojectcost > 1000000
+
+Part II: Querying the World Bank Collection
+Query the World Bank collection and provide query and answers to the following questions:
+4. Which are the three countries in the MENA region (“Middle East and North Africa”) with the
+most projects?
+5. Which region has the largest total amount of lend project cost?
+6. Which active projects have a lend project cost of over 1 billion USD? 
